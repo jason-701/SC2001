@@ -126,6 +126,44 @@ public class Main{
         }
         return arr;
     }
+    
+    static ArrayList<ArrayList<Integer>> matrixToAdjList(int[][] a)
+    {
+        
+        int l = a[0].length;
+        ArrayList<ArrayList<Integer>> adjListArray= new ArrayList<ArrayList<Integer>>(l);
+ 
+        // Create a new list for each
+        // vertex such that adjacent
+        // nodes can be stored
+        for (int i = 0; i < l; i++) {
+            adjListArray.add(new ArrayList<Integer>());
+        }
+         
+        int i, j;
+        for (i = 0; i < a[0].length; i++) {
+            for (j = 0; j < a.length; j++) {
+                if (a[i][j] >0) {
+                    adjListArray.get(i).add(j);
+                }
+            }
+        }
+         
+        return adjListArray;
+    }
+    
+	static void printArrayList(ArrayList<ArrayList<Integer>> adjListArray) {
+// Print the adjacency list
+		for (int v = 0; v < adjListArray.size(); v++) {
+			System.out.print(v);
+			for (Integer u : adjListArray.get(v)) {
+				System.out.print(" -> " + u);
+			}
+			System.out.println();
+		}
+	}
+   
+    
     public static void main(String[] arg)   {
         int V = 5;
         int source = 0;
@@ -136,6 +174,12 @@ public class Main{
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
         int[][] graph = create_array(V,10,0);
+        
+        
+       
+       
+       printArrayList(matrixToAdjList(graph));
+        
         print_Rand_array(V,graph);
         dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(5);
         dijkstraMatrix.dijkstra_matrix(graph,0);
