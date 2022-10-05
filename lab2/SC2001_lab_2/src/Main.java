@@ -179,7 +179,7 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,V,1);
+        int[][] graph = create_array(V,V,0);
         
         printArrayList(matrixToAdjList(graph));
         
