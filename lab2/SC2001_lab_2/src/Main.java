@@ -169,7 +169,7 @@ public class Main{
         int source = 0;
         long start, end, timecomplex, startHeap, endHeap, timecomplexHeap;
 
-        System.out.println("Enter the number of edges: ");
+        System.out.println("Enter the number of nodes: ");
         Scanner sc = new Scanner(System.in);
         V = sc.nextInt();
 
@@ -179,7 +179,7 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,V,1);
+        int[][] graph = create_array(V,V,0);
         
         printArrayList(matrixToAdjList(graph));
         
@@ -196,7 +196,7 @@ public class Main{
         endHeap = System.nanoTime();
         timecomplexHeap = endHeap - startHeap;
 
-        System.out.println("Time taken to sort " + V + " number of edges using priority queue: " + timecomplex + "ns");
-        System.out.println("Time taken to sort " + V + " number of edges using minHeap as priority queue: " + timecomplexHeap + "ns");
+        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timecomplex + "ns");
+        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timecomplexHeap + "ns");
     }
 }
