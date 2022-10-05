@@ -165,25 +165,38 @@ public class Main{
    
     
     public static void main(String[] arg)   {
-        int V = 5;
+        int V;
         int source = 0;
+        long start, end, timecomplex, startHeap, endHeap, timecomplexHeap;
+
+        System.out.println("Enter the number of edges: ");
+        Scanner sc = new Scanner(System.in);
+        V = sc.nextInt();
+
         /*int[][] graph = new int[][] { { 0, 2, 1, 0, 0, 0},
                 { 2, 0, 7, 0, 8, 4},
                 { 1, 7, 0, 7, 0, 3},
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,10,0);
+        int[][] graph = create_array(V,V,1);
         
-        
-       
-       
-       printArrayList(matrixToAdjList(graph));
+        printArrayList(matrixToAdjList(graph));
         
         print_Rand_array(V,graph);
-        dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(5);
-        dijkstraMatrix.dijkstra_matrix(graph,0);
-        dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+        dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
 
+        start= System.nanoTime();
+        dijkstraMatrix.dijkstra_matrix(graph,0);
+        end = System.nanoTime();
+        timecomplex = end - start;
+
+        startHeap= System.nanoTime();
+        dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+        endHeap = System.nanoTime();
+        timecomplexHeap = endHeap - startHeap;
+
+        System.out.println("Time taken to sort " + V + " number of edges using priority queue: " + timecomplex + "ns");
+        System.out.println("Time taken to sort " + V + " number of edges using minHeap as priority queue: " + timecomplexHeap + "ns");
     }
 }
