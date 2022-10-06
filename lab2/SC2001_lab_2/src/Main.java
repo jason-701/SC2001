@@ -167,7 +167,7 @@ public class Main{
     public static void main(String[] arg)   {
         int V;
         int source = 0;
-        long start, end, timecomplex, startHeap, endHeap, timecomplexHeap;
+        long start, end, timecomplex, startHeap, endHeap, timecomplexHeap, help, helpHeap;
 
         System.out.println("Enter the number of nodes: ");
         Scanner sc = new Scanner(System.in);
@@ -181,16 +181,26 @@ public class Main{
                 { 0, 4, 3, 4, 5, 0} };*/
         int[][] graph = create_array(V,V,0);
         
-        printArrayList(matrixToAdjList(graph));
+        // printArrayList(matrixToAdjList(graph));
         
-        print_Rand_array(V,graph);
+        // print_Rand_array(V,graph);
         dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
 
-        timecomplex = dijkstraMatrix.dijkstra_matrix(graph,0);
+        // timecomplex = dijkstraMatrix.dijkstra_matrix(graph,0);
+        // timecomplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
 
-        timecomplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+        start= System.nanoTime();
+        help = dijkstraMatrix.dijkstra_matrix(graph,0);
+        end = System.nanoTime();
+        timecomplex = end - start;
 
-        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timecomplex + "ns");
-        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timecomplexHeap + "ns");
+        startHeap= System.nanoTime();
+        helpHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+        endHeap = System.nanoTime();
+        timecomplexHeap = endHeap - startHeap;
+
+
+        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timecomplex + "," + help + "ns");
+        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timecomplexHeap + "," + helpHeap + "ns");
     }
 }

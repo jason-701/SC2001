@@ -70,7 +70,7 @@ public class dijkstraMatrix{
         }
         //shortest path for all vertices
         end = System.nanoTime();
-        printMinpath(path_array, predecessor, source);
+        // printMinpath(path_array, predecessor, source);
         System.out.println("Hello");
 
         return end-start;
@@ -121,7 +121,7 @@ public class dijkstraMatrix{
         }
         end = System.nanoTime();
         //shortest path for all vertices
-        printMinpath(path_array, predecessor, source);
+        // printMinpath(path_array, predecessor, source);
 
         return end-start;
     }
