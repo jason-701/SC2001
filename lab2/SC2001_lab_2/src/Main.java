@@ -113,13 +113,23 @@ public class Main{
             System.out.println();
         }
     }
-    public static int[][] create_array(int V, int max, int min){
+    public static int[][] create_array(int V, int max, int min, int edgeNum){
         Random rand= new Random(System.currentTimeMillis());
         int[][] arr = new int[V][V];
-        for (int i = 0; i < V; i++) {
-            for (int j = 0; j < V; j++) {
-                arr[i][j]= rand.nextInt(max-min+1)+min;
+        for (int i = 1; i < V; i++) {
+            //arr[i-1][i] = rand.nextInt(max-min+1)+min;  //ensures that the graph is connected
+            arr[0][i]=rand.nextInt(max-min+1)+min;
+        }
+        int count = 0;
+        while(count<edgeNum){
+            int i = rand.nextInt((V-1)-(1)+1)+1;  //random integer between max and min is done by rand.nextInt(max-min+1)+min
+            int j = rand.nextInt((V-1)-(0)+1)+0;
+            if (arr[i][j]!=0 || i==j)
+                continue;
+            else{
+                arr[i][j] = rand.nextInt(max-min+1)+min;
             }
+            count++;
         }
         for (int i = 0; i < V; i++) {
             arr[i][i]=0;
@@ -127,7 +137,7 @@ public class Main{
         return arr;
     }
     
-    static ArrayList<ArrayList<Integer>> matrixToAdjList(int[][] a)
+    /*static ArrayList<ArrayList<Integer>> matrixToAdjList(int[][] a)
     {
         
         int l = a[0].length;
@@ -150,14 +160,14 @@ public class Main{
         }
          
         return adjListArray;
-    }
+    }*/
     
-	static void printArrayList(ArrayList<ArrayList<Integer>> adjListArray) {
+	static void printArrayList(ArrayList<ArrayList<edges>> adjListArray) {
 // Print the adjacency list
 		for (int v = 0; v < adjListArray.size(); v++) {
 			System.out.print(v);
-			for (Integer u : adjListArray.get(v)) {
-				System.out.print(" -> " + u);
+			for (edges u : adjListArray.get(v)) {
+				System.out.print(" -> " + u.getNode());
 			}
 			System.out.println();
 		}
@@ -165,13 +175,15 @@ public class Main{
    
     
     public static void main(String[] arg)   {
-        int V;
+        int V,edgeNum;
         int source = 0;
-        long start, end, timecomplex, startHeap, endHeap, timecomplexHeap;
+        long timeComplexMatrix, timeComplexHeap;
 
-        System.out.println("Enter the number of nodes: ");
+        System.out.print("Enter the number of nodes: ");
         Scanner sc = new Scanner(System.in);
         V = sc.nextInt();
+        System.out.print("Enter the number of connected nodes: ");
+        edgeNum = sc.nextInt();
 
         /*int[][] graph = new int[][] { { 0, 2, 1, 0, 0, 0},
                 { 2, 0, 7, 0, 8, 4},
@@ -179,24 +191,18 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,V,0);
-        
-        printArrayList(matrixToAdjList(graph));
-        
-        print_Rand_array(V,graph);
+        int[][] graph = create_array(V,100,1,edgeNum);
         dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
+        
+        //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
+        
+        //print_Rand_array(V,graph);
 
-        start= System.nanoTime();
-        dijkstraMatrix.dijkstra_matrix(graph,0);
-        end = System.nanoTime();
-        timecomplex = end - start;
 
-        startHeap= System.nanoTime();
-        dijkstraMatrix.dijkstraMatrixHeap(graph,0);
-        endHeap = System.nanoTime();
-        timecomplexHeap = endHeap - startHeap;
+        timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+        timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
 
-        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timecomplex + "ns");
-        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timecomplexHeap + "ns");
+        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
+        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");
     }
 }

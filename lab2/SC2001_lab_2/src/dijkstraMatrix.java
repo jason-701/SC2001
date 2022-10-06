@@ -29,12 +29,12 @@ public class dijkstraMatrix{
             System.out.println(i + " \t\t\t " + path_array[i] + " \t\t\t\t " + shortestPath(predecessor, i, source, String.valueOf(source)) + " -> " + i);
     }
 
-    public void dijkstra_matrix(int[][] graph, int source)
+    public long dijkstra_matrix(int[][] graph, int source)
     {
         int[] path_array = new int[V];
         boolean[] shortestpathset = new boolean[V];
         int[] predecessor = new int[V];
-
+        long start,end;
         //initiallyy all the distance are infinite and shortestpathset is false
 
         for(int i=0; i<V; i++)
@@ -46,12 +46,10 @@ public class dijkstraMatrix{
 
         //path between vertex and itself is always 0
         path_array[source]= 0;
+        start = System.nanoTime();
         int u;
         priorityQueueWithArray priorityQueueWithArray = new priorityQueueWithArray();
         int[] queue = priorityQueueWithArray.createQueue(V,path_array);
-        int[] arr = new int[V];
-        Heap heap = new Heap();
-        heap.heapSort(arr,queue,V);
         while(!priorityQueueWithArray.isEmpty(queue,V)){
             u = priorityQueueWithArray.dequeue(queue,V);
             shortestpathset[u] = true;
@@ -66,18 +64,20 @@ public class dijkstraMatrix{
                 }
             }
         }
+        end = System.nanoTime();
         //shortest path for all vertices
-        printMinpath(path_array, predecessor, source);
-        System.out.println("Hello");
+        //printMinpath(path_array, predecessor, source);
+        return (end-start);
 
     }
 
-    public void dijkstraMatrixHeap(int[][] graph, int source)
+    public long dijkstraMatrixHeap(int[][] graph, int source)
     {
         int[] path_array = new int[V];
         boolean[] shortestpathset = new boolean[V];
         int[] predecessor = new int[V];
-        ArrayList<ArrayList<Integer>> list= matrixToAdjList(graph);
+        long start,end;
+        ArrayList<ArrayList<edges>> list= matrixToAdjList(graph);
        // printArrayList(list);
         //initiallyy all the distance are infinite and shortestpathset is false
 
@@ -91,66 +91,56 @@ public class dijkstraMatrix{
         //path between vertex and itself is always 0
         path_array[source]= 0;
         edges u;
+        start = System.nanoTime();
         int uNode;
         priorityQueueHeap queue = new priorityQueueHeap();
-
         for (int i = 0; i < V; i++) {
             queue.enqueue(i,path_array[i]);
         }
         while(!queue.isEmpty()){
             u = queue.dequeue();
             uNode = u.getNode();
-            shortestpathset[u.getNode()] = true;
-            
-            for(int v=0; v< V; v++)
-            {
-                //if the vertex is not in the shortestpathset then update
-                if(!shortestpathset[v] && list.get(uNode).get(v)!=0 && path_array[uNode] + list.get(uNode).get(v) < path_array[v])
-                {
-                    path_array[v] = list.get(uNode).get(v) + path_array[uNode];
-                    predecessor[v] = uNode;
-                    queue.enqueue(v,path_array[v]);
+            shortestpathset[uNode] = true;
+            for (edges edge : list.get(uNode)){
+                int edgeNode = edge.getNode();
+                int edgeDistance = edge.getDistance();
+                if(!shortestpathset[edgeNode] && path_array[uNode]+ edgeDistance < path_array[edgeNode]){
+                    path_array[edgeNode] = path_array[uNode]+ edgeDistance;
+                    predecessor[edgeNode] = uNode;
+                    queue.enqueue(edgeNode,path_array[edgeNode]);
                 }
             }
         }
         //shortest path for all vertices
-        printMinpath(path_array, predecessor, source);
+        end = System.nanoTime();
+        //printMinpath(path_array, predecessor, source);
+        return (end-start);
 
     }
     
-    public static ArrayList<ArrayList<Integer>> matrixToAdjList(int[][] a)
+    public ArrayList<ArrayList<edges>> matrixToAdjList(int[][] a)
     {
-        
+
         int l = a[0].length;
-        ArrayList<ArrayList<Integer>> adjListArray= new ArrayList<ArrayList<Integer>>(l);
- 
+        ArrayList<ArrayList<edges>> adjListArray= new ArrayList<ArrayList<edges>>();
+
         // Create a new list for each
         // vertex such that adjacent
         // nodes can be stored
         for (int i = 0; i < l; i++) {
-            adjListArray.add(new ArrayList<Integer>());
+            ArrayList<edges> temp = new ArrayList<edges>();
+            edges u = new edges(i,0);
+            adjListArray.add(temp);
         }
-         
-        int i, j;
-        for (i = 0; i < a[0].length; i++) {
-            for (j = 0; j < a.length; j++) {
-               // if (a[i][j] >0) {
-                    adjListArray.get(i).add(a[i][j]);
-                //}
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < l; j++) {
+                if (a[i][j]!=0){
+                    edges u = new edges(j,a[i][j]);
+                    adjListArray.get(i).add(u);
+                }
             }
         }
-         
         return adjListArray;
     }
-    
-	static void printArrayList(ArrayList<ArrayList<Integer>> adjListArray) {
-// Print the adjacency list
-		for (int v = 0; v < adjListArray.size(); v++) {
-			System.out.print(v);
-			for (Integer u : adjListArray.get(v)) {
-				System.out.print(" -> " + u);
-			}
-			System.out.println();
-		}
-	}
+
 }
