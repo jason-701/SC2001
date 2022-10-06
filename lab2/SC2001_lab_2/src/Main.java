@@ -103,6 +103,7 @@ class Node implements Comparator<dijkstra.Node> {
 }*/
 
 import java.util.*;
+import java.io.*;
 public class Main{
 
     public static void print_Rand_array(int V, int[][] arr){
@@ -173,17 +174,18 @@ public class Main{
 		}
 	}
    
-    
     public static void main(String[] arg)   {
+    try {
+        PrintWriter output = new PrintWriter("./output.csv");
         int V,edgeNum;
         int source = 0;
         long timeComplexMatrix, timeComplexHeap;
 
-        System.out.print("Enter the number of nodes: ");
-        Scanner sc = new Scanner(System.in);
-        V = sc.nextInt();
-        System.out.print("Enter the number of connected nodes: ");
-        edgeNum = sc.nextInt();
+        // System.out.print("Enter the number of nodes: ");
+        // Scanner sc = new Scanner(System.in);
+        // V = sc.nextInt();
+        // System.out.print("Enter the number of connected nodes: ");
+        // edgeNum = sc.nextInt();
 
         /*int[][] graph = new int[][] { { 0, 2, 1, 0, 0, 0},
                 { 2, 0, 7, 0, 8, 4},
@@ -191,18 +193,50 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,100,1,edgeNum);
-        dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
-        
-        //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
-        
-        //print_Rand_array(V,graph);
+        output.println("Nodes, Edges, Matrix, Heap");
+        for (V=1000; V<=10000; V+=1000)
+        {
+            edgeNum = V;
+            int[][] graph = create_array(V,100,1,edgeNum);
+            dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
+            
+            //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
+            
+            //print_Rand_array(V,graph);
+    
+    
+            timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+            timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+    
+            // System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
+            // System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");
+            output.println(V + "," + edgeNum + "," + timeComplexMatrix+ "," + timeComplexHeap);
+        }
 
-
-        timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
-        timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
-
-        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
-        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");
+        for (V=1000; V<=10000; V+=1000)
+        {
+            edgeNum = V*V-2*V;
+            int[][] graph = create_array(V,100,1,edgeNum);
+            dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
+            
+            //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
+            
+            //print_Rand_array(V,graph);
+    
+    
+            timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+            timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+    
+            // System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
+            // System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");
+            output.println(V + "," + edgeNum + "," + timeComplexMatrix+ "," + timeComplexHeap);
+        }
+        output.close();
+        System.out.println("done");
+    
+    
+    } catch (IOException e) {
+        System.out.println("ERROR");
     }
+}
 }
