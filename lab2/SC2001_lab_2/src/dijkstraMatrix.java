@@ -66,7 +66,7 @@ public class dijkstraMatrix{
         }
         end = System.nanoTime();
         //shortest path for all vertices
-        printMinpath(path_array, predecessor, source);
+        //printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }
@@ -94,7 +94,6 @@ public class dijkstraMatrix{
         start = System.nanoTime();
         int uNode;
         priorityQueueHeap queue = new priorityQueueHeap();
-
         for (int i = 0; i < V; i++) {
             queue.enqueue(i,path_array[i]);
         }
@@ -103,16 +102,18 @@ public class dijkstraMatrix{
             uNode = u.getNode();
             shortestpathset[uNode] = true;
             for (edges edge : list.get(uNode)){
-                if(!shortestpathset[edge.getNode()] && path_array[uNode]+ edge.getDistance() < path_array[edge.getNode()]){
-                    path_array[edge.getNode()] = path_array[uNode]+ edge.getDistance();
-                    predecessor[edge.getNode()] = uNode;
-                    queue.enqueue(edge.getNode(),path_array[edge.getNode()]);
+                int edgeNode = edge.getNode();
+                int edgeDistance = edge.getDistance();
+                if(!shortestpathset[edgeNode] && path_array[uNode]+ edgeDistance < path_array[edgeNode]){
+                    path_array[edgeNode] = path_array[uNode]+ edgeDistance;
+                    predecessor[edgeNode] = uNode;
+                    queue.enqueue(edgeNode,path_array[edgeNode]);
                 }
             }
         }
         //shortest path for all vertices
         end = System.nanoTime();
-        printMinpath(path_array, predecessor, source);
+        //printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }
@@ -121,13 +122,15 @@ public class dijkstraMatrix{
     {
 
         int l = a[0].length;
-        ArrayList<ArrayList<edges>> adjListArray= new ArrayList<ArrayList<edges>>(l);
+        ArrayList<ArrayList<edges>> adjListArray= new ArrayList<ArrayList<edges>>();
 
         // Create a new list for each
         // vertex such that adjacent
         // nodes can be stored
         for (int i = 0; i < l; i++) {
-            adjListArray.add(new ArrayList<edges>());
+            ArrayList<edges> temp = new ArrayList<edges>();
+            edges u = new edges(i,0);
+            adjListArray.add(temp);
         }
         for (int i = 0; i < l; i++) {
             for (int j = 0; j < l; j++) {

@@ -117,7 +117,8 @@ public class Main{
         Random rand= new Random(System.currentTimeMillis());
         int[][] arr = new int[V][V];
         for (int i = 1; i < V; i++) {
-            arr[0][i] = rand.nextInt(max-min+1)+min;  //ensures that the graph is connected
+            //arr[i-1][i] = rand.nextInt(max-min+1)+min;  //ensures that the graph is connected
+            arr[0][i]=rand.nextInt(max-min+1)+min;
         }
         int count = 0;
         while(count<edgeNum){
@@ -190,12 +191,12 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,10,1,edgeNum);
+        int[][] graph = create_array(V,100,1,edgeNum);
         dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
         
-        printArrayList(dijkstraMatrix.matrixToAdjList(graph));
+        //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
         
-        print_Rand_array(V,graph);
+        //print_Rand_array(V,graph);
 
 
         timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
