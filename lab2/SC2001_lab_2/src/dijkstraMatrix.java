@@ -29,11 +29,12 @@ public class dijkstraMatrix{
             System.out.println(i + " \t\t\t " + path_array[i] + " \t\t\t\t " + shortestPath(predecessor, i, source, String.valueOf(source)) + " -> " + i);
     }
 
-    public void dijkstra_matrix(int[][] graph, int source)
+    public long dijkstra_matrix(int[][] graph, int source)
     {
         int[] path_array = new int[V];
         boolean[] shortestpathset = new boolean[V];
         int[] predecessor = new int[V];
+        long start, end;
 
         //initiallyy all the distance are infinite and shortestpathset is false
 
@@ -46,6 +47,7 @@ public class dijkstraMatrix{
 
         //path between vertex and itself is always 0
         path_array[source]= 0;
+        start = System.nanoTime();
         int u;
         priorityQueueWithArray priorityQueueWithArray = new priorityQueueWithArray();
         int[] queue = priorityQueueWithArray.createQueue(V,path_array);
@@ -67,16 +69,19 @@ public class dijkstraMatrix{
             }
         }
         //shortest path for all vertices
+        end = System.nanoTime();
         printMinpath(path_array, predecessor, source);
         System.out.println("Hello");
 
+        return end-start;
     }
 
-    public void dijkstraMatrixHeap(int[][] graph, int source)
+    public long dijkstraMatrixHeap(int[][] graph, int source)
     {
         int[] path_array = new int[V];
         boolean[] shortestpathset = new boolean[V];
         int[] predecessor = new int[V];
+        long start,end;
         ArrayList<ArrayList<Integer>> list= matrixToAdjList(graph);
        // printArrayList(list);
         //initiallyy all the distance are infinite and shortestpathset is false
@@ -90,6 +95,7 @@ public class dijkstraMatrix{
 
         //path between vertex and itself is always 0
         path_array[source]= 0;
+        start = System.nanoTime();
         edges u;
         int uNode;
         priorityQueueHeap queue = new priorityQueueHeap();
@@ -113,9 +119,11 @@ public class dijkstraMatrix{
                 }
             }
         }
+        end = System.nanoTime();
         //shortest path for all vertices
         printMinpath(path_array, predecessor, source);
 
+        return end-start;
     }
     
     public static ArrayList<ArrayList<Integer>> matrixToAdjList(int[][] a)

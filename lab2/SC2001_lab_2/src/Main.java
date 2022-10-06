@@ -186,15 +186,9 @@ public class Main{
         print_Rand_array(V,graph);
         dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
 
-        start= System.nanoTime();
-        dijkstraMatrix.dijkstra_matrix(graph,0);
-        end = System.nanoTime();
-        timecomplex = end - start;
+        timecomplex = dijkstraMatrix.dijkstra_matrix(graph,0);
 
-        startHeap= System.nanoTime();
-        dijkstraMatrix.dijkstraMatrixHeap(graph,0);
-        endHeap = System.nanoTime();
-        timecomplexHeap = endHeap - startHeap;
+        timecomplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
 
         System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timecomplex + "ns");
         System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timecomplexHeap + "ns");
