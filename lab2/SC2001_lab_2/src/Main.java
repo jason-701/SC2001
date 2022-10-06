@@ -123,7 +123,7 @@ public class Main{
         while(count<edgeNum){
             int i = rand.nextInt((V-1)-(1)+1)+1;  //random integer between max and min is done by rand.nextInt(max-min+1)+min
             int j = rand.nextInt((V-1)-(0)+1)+0;
-            if (arr[i][j]!=0)
+            if (arr[i][j]!=0 || i==j)
                 continue;
             else{
                 arr[i][j] = rand.nextInt(max-min+1)+min;
