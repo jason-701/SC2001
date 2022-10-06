@@ -222,6 +222,5 @@ public class Main{
         }catch (IOException e){
             System.out.println("Error");
         }
-
     }
 }
