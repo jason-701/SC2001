@@ -102,6 +102,8 @@ class Node implements Comparator<dijkstra.Node> {
     }
 }*/
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 public class Main{
 
@@ -179,7 +181,7 @@ public class Main{
         int source = 0;
         long timeComplexMatrix, timeComplexHeap;
 
-        System.out.print("Enter the number of nodes: ");
+        /*System.out.print("Enter the number of nodes: ");
         Scanner sc = new Scanner(System.in);
         V = sc.nextInt();
         System.out.print("Enter the number of connected nodes: ");
@@ -191,19 +193,35 @@ public class Main{
                 { 0, 0, 7, 0, 8, 4},
                 { 0, 8, 0, 8, 0, 5},
                 { 0, 4, 3, 4, 5, 0} };*/
-        int[][] graph = create_array(V,100,1,edgeNum);
-        dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
-        
+        //int[][] graph = create_array(V,100,1,edgeNum);
+        //dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(V);
+
         //printArrayList(dijkstraMatrix.matrixToAdjList(graph));
-        
+
         //print_Rand_array(V,graph);
+        //timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+        //timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
 
 
-        timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
-        timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+        //System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
+        //System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");*/
 
-        System.out.println("Time taken to sort " + V + " number of nodes using priority queue: " + timeComplexMatrix + "ns");
-        System.out.println("Time taken to sort " + V + " number of nodes using minHeap as priority queue: " + timeComplexHeap + "ns");
+
+        try{
+            PrintWriter output = new PrintWriter("C:/Users/ROG/Desktop/lab2/dense-up-to-1k.txt");
+            output.println("Nodes,Edges,ArrayTime,HeapTime");
+            for (int i = 50; i <= 1000; i+=50) {
+                int[][] graph = create_array(i,100,1, (int)(Math.pow(i,2)-2*i));
+                dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(i);
+                timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+                timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+                System.out.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap);
+                output.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap );
+            }
+            output.close();
+        }catch (IOException e){
+            System.out.println("Error");
+        }
 
     }
 }

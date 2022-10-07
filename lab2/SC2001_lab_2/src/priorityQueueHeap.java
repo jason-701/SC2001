@@ -28,4 +28,8 @@ public class priorityQueueHeap {
     public boolean isEmpty(){
         return queue.isEmpty();
     }
+
+    public void remove(edges u){
+        queue.remove(u);
+    }
 }

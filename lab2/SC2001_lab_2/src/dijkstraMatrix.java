@@ -66,7 +66,7 @@ public class dijkstraMatrix{
         }
         end = System.nanoTime();
         //shortest path for all vertices
-        printMinpath(path_array, predecessor, source);
+        //printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }
@@ -105,6 +105,7 @@ public class dijkstraMatrix{
                 int edgeNode = edge.getNode();
                 int edgeDistance = edge.getDistance();
                 if(!shortestpathset[edgeNode] && path_array[uNode]+ edgeDistance < path_array[edgeNode]){
+                    queue.remove(edge);
                     path_array[edgeNode] = path_array[uNode]+ edgeDistance;
                     predecessor[edgeNode] = uNode;
                     queue.enqueue(edgeNode,path_array[edgeNode]);
@@ -113,7 +114,7 @@ public class dijkstraMatrix{
         }
         //shortest path for all vertices
         end = System.nanoTime();
-        printMinpath(path_array, predecessor, source);
+        //printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }
