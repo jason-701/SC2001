@@ -208,16 +208,25 @@ public class Main{
 
 
         try{
-            PrintWriter output = new PrintWriter("C:/Users/ROG/Desktop/lab2/dense-up-to-1k.txt");
+            PrintWriter output = new PrintWriter("C:/Users/renyo/Documents/schFolder/Y2S1/SC2001/Lab2/output.txt");
             output.println("Nodes,Edges,ArrayTime,HeapTime");
-            for (int i = 50; i <= 1000; i+=50) {
+            for (int i = 1000; i <= 10000; i+=1000) {
+                int[][] graph = create_array(i,100,1, i);
+                dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(i);
+                timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
+                timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
+                // System.out.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap);
+                output.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap );
+            }
+            for (int i = 1000; i <= 10000; i+=1000) {
                 int[][] graph = create_array(i,100,1, (int)(Math.pow(i,2)-2*i));
                 dijkstraMatrix dijkstraMatrix = new dijkstraMatrix(i);
                 timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
                 timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
-                System.out.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap);
+                // System.out.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap);
                 output.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap );
             }
+            System.out.println("done");
             output.close();
         }catch (IOException e){
             System.out.println("Error");
