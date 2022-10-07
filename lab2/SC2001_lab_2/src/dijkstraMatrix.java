@@ -47,26 +47,26 @@ public class dijkstraMatrix{
         //path between vertex and itself is always 0
         path_array[source]= 0;
         start = System.nanoTime();
-        int u;
+        edges u;
         priorityQueueWithArray priorityQueueWithArray = new priorityQueueWithArray();
-        int[] queue = priorityQueueWithArray.createQueue(V,path_array);
-        while(!priorityQueueWithArray.isEmpty(queue,V)){
-            u = priorityQueueWithArray.dequeue(queue,V);
-            shortestpathset[u] = true;
+        edges[] queue = priorityQueueWithArray.createQueue(V,path_array);
+        while(!priorityQueueWithArray.isEmpty(queue)){
+            u = priorityQueueWithArray.dequeue(queue);
+            shortestpathset[u.getNode()] = true;
             for(int v=0; v< V; v++)
             {
                 //if the vertex is not in the shortestpathset then update
-                if(!shortestpathset[v] && graph[u][v]!=0 && path_array[u] + graph[u][v] < path_array[v])
+                if(!shortestpathset[v] && graph[u.getNode()][v]!=0 && path_array[u.getNode()] + graph[u.getNode()][v] < path_array[v])
                 {
-                    path_array[v] = graph[u][v] + path_array[u];
-                    predecessor[v] = u;
+                    path_array[v] = graph[u.getNode()][v] + path_array[u.getNode()];
+                    predecessor[v] = u.getNode();
                     priorityQueueWithArray.enqueue(queue,v,path_array[v]);
                 }
             }
         }
         end = System.nanoTime();
         //shortest path for all vertices
-        //printMinpath(path_array, predecessor, source);
+        printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }
@@ -113,7 +113,7 @@ public class dijkstraMatrix{
         }
         //shortest path for all vertices
         end = System.nanoTime();
-        //printMinpath(path_array, predecessor, source);
+        printMinpath(path_array, predecessor, source);
         return (end-start);
 
     }

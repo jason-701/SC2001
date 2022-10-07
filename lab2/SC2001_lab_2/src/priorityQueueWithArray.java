@@ -1,33 +1,35 @@
 import java.util.Arrays;
 
 public class priorityQueueWithArray {
-    public int[] createQueue(int numOfVertex, int[] distance){
-        int [] arr = Arrays.copyOf(distance,numOfVertex);
+    public edges[] createQueue(int numOfVertex, int[] distance){
+        edges [] arr = new edges[distance.length];
+        for (int i = 0; i < distance.length; i++) {
+            arr[i] = new edges(i,distance[i]);
+        }
+        sortArray(arr);
         return arr;
     }
-    public void enqueue(int[] arr, int vertex, int distance ){
-        arr[vertex] = distance;
+    public void enqueue(edges[] arr, int vertex, int distance ){
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].getNode()==vertex){
+                arr[i]=new edges(vertex,distance);
+                break;
+            }
+        }
+        Arrays.sort(arr);
     }
 
-    public int dequeue(int[] arr, int numberOfVertex){
-        int index, distance;
-        index = 0;
-        distance = 999999;
-        for (int i = 1; i < numberOfVertex; i++) {
-            if (arr[i] < distance && arr[i] !=-1){
-                distance = arr[i];
-                index = i;
-            }
-        }
-        arr[index] = -1;
-        return index;
+    public edges dequeue(edges[] arr){
+        edges u = arr[0];
+        arr[0] = new edges(u.getNode(),99999);
+        Arrays.sort(arr);
+        return u;
     }
-    public boolean isEmpty(int[] arr, int numberOfVertex){
-        for (int i = 0; i < numberOfVertex; i++) {
-            if (arr[i]!=-1){
-                return false;
-            }
-        }
-        return true;
+    public boolean isEmpty(edges[] arr){
+        return arr[0].getDistance() == 99999;
+    }
+
+    public void sortArray(edges[] arr){
+        Arrays.sort(arr);
     }
 }
