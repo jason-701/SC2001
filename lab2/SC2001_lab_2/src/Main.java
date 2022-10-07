@@ -216,7 +216,7 @@ public class Main{
                 timeComplexMatrix = dijkstraMatrix.dijkstra_matrix(graph,0);
                 timeComplexHeap = dijkstraMatrix.dijkstraMatrixHeap(graph,0);
                 // System.out.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap);
-                output.println(i + "," + (Math.pow(i,2)-2*i) + "," + timeComplexMatrix + "," + timeComplexHeap );
+                output.println(i + "," + i + "," + timeComplexMatrix + "," + timeComplexHeap );
             }
             for (int i = 1000; i <= 10000; i+=1000) {
                 int[][] graph = create_array(i,100,1, (int)(Math.pow(i,2)-2*i));
