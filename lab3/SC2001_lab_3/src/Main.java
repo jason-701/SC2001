@@ -22,5 +22,6 @@ public class Main {
 
         int[][] output = bottomUp.knapSackBottomUp(weightArray,capacity,profitArray,objNum);
         System.out.println(output[objNum][capacity]);
+        System.out.println(recursive.knapSackRecursive(weightArray,profitArray,capacity,objNum-1));
     }
 }
