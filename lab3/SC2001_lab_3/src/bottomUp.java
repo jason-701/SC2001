@@ -2,6 +2,7 @@ import java.lang.Math;
 public class bottomUp {
     static int[][] knapSackBottomUp(int[] weight, int capacity,int[] profit, int objNum){
         int[][] array = new int[objNum+1][capacity+1];
+        int temp;
         for (int i = 0; i < capacity+1; i++) {
             array[0][i]=0;
         }
@@ -12,8 +13,14 @@ public class bottomUp {
             for (int j = 1; j < capacity+1; j++) {
                 array[i][j] = array[i-1][j];
                 if (j>=weight[i-1]){
-                    if (array[i][j]<array[i-1][j-weight[i-1]]+profit[i-1]){
-                        array[i][j]=array[i-1][j-weight[i-1]]+profit[i-1];
+                    if (array[i-1][j-weight[i-1]]+profit[i-1]>array[i][j-weight[i-1]]+profit[i-1]){
+                        temp = array[i-1][j-weight[i-1]]+profit[i-1];
+                    }
+                    else{
+                        temp = array[i][j-weight[i-1]]+profit[i-1];
+                    }
+                    if (array[i][j]<temp){
+                        array[i][j]=temp;
                     }
                 }
             }
