@@ -1,2 +1,1 @@
-# depressed
-We are depressed
+# SC2001
